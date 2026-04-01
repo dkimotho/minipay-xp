@@ -1,7 +1,7 @@
 import { Suspense, lazy } from 'react'
 import { WagmiProvider } from 'wagmi'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { HashRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { config } from './lib/wagmi'
 import { AppErrorBoundary } from './components/layout/AppErrorBoundary'
 import { PageSkeleton } from './components/layout/PageSkeleton'
@@ -30,11 +30,20 @@ function AppContent() {
   }
 
   return (
-    <div className="flex h-screen bg-bg-primary overflow-hidden">
-      <div className="w-full max-w-md mx-auto flex flex-col flex-1">
+    <>
+      <div style={{
+        position: 'fixed', top: 0, left: 0, right: 0,
+        background: '#35D07F', color: '#0A0A0A',
+        padding: '8px', textAlign: 'center',
+        fontSize: '12px', zIndex: 9999, fontWeight: 'bold'
+      }}>
+        ✓ MiniPay XP loaded correctly
+      </div>
+      <div className="flex h-screen bg-bg-primary overflow-hidden" style={{ marginTop: '32px' }}>
+        <div className="w-full max-w-md mx-auto flex flex-col flex-1">
         <div className="flex-1 overflow-hidden flex flex-col">
           <Suspense fallback={<PageSkeleton />}>
-            <BrowserRouter>
+            <HashRouter>
               <Routes>
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/staking" element={<Staking />} />
@@ -44,12 +53,13 @@ function AppContent() {
                 <Route path="/rewards" element={<Rewards />} />
                 <Route path="/" element={<Navigate to="/dashboard" replace />} />
               </Routes>
-            </BrowserRouter>
+            </HashRouter>
           </Suspense>
         </div>
         <Toast />
       </div>
-    </div>
+      </div>
+    </>
   )
 }
 
