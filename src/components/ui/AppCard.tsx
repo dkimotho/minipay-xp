@@ -1,4 +1,11 @@
-export const AppCard = ({ app, onTap }) => {
+import { apps } from '../../data/apps'
+
+interface AppCardProps {
+  app: (typeof apps)[0]
+  onTap: (app: (typeof apps)[0]) => void
+}
+
+export const AppCard = ({ app, onTap }: AppCardProps) => {
   return (
     <div
       onClick={() => onTap(app)}
@@ -16,9 +23,11 @@ export const AppCard = ({ app, onTap }) => {
           <p className="text-xs text-gray-400 mb-2">
             {app.weeklyUsers.toLocaleString()} users earned XP this week
           </p>
-          <p className="text-xs text-accent-green font-semibold">{app.xpRange}</p>
+          <p className="text-xs text-accent-green font-semibold">
+            {app.xpRange}
+          </p>
         </div>
       </div>
     </div>
-  );
-};
+  )
+}

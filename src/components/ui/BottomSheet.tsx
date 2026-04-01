@@ -1,15 +1,23 @@
-import { useContext } from "react";
-import { AppContext } from "../../context/AppContext";
+import { useContext } from 'react'
+import { AppContext } from '../../context/AppContext'
+import { apps } from '../../data/apps'
 
-export const BottomSheet = ({ app, onClose }) => {
-  const { showToast } = useContext(AppContext);
+interface BottomSheetProps {
+  app: (typeof apps)[0] | null
+  onClose: () => void
+}
 
-  if (!app) return null;
+export const BottomSheet = ({ app, onClose }: BottomSheetProps) => {
+  const context = useContext(AppContext)
+  if (!context) throw new Error('AppContext not found')
+  const { showToast } = context
+
+  if (!app) return null
 
   const handleOpenApp = () => {
-    onClose();
-    showToast("Opening " + app.name + "…");
-  };
+    onClose()
+    showToast('Opening ' + app.name + '…')
+  }
 
   return (
     <div className="fixed inset-0 z-40">
@@ -33,7 +41,9 @@ export const BottomSheet = ({ app, onClose }) => {
           <p className="text-sm text-gray-300 mb-6">{app.description}</p>
 
           <div className="bg-bg-tertiary rounded-lg p-4 mb-6">
-            <h3 className="text-sm font-semibold mb-3">Actions that earn XP</h3>
+            <h3 className="text-sm font-semibold mb-3">
+              Actions that earn XP
+            </h3>
             <ul className="space-y-2">
               {app.actions.map((action, idx) => (
                 <li key={idx} className="text-sm text-gray-300">
@@ -57,5 +67,5 @@ export const BottomSheet = ({ app, onClose }) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}

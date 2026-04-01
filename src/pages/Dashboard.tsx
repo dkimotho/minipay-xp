@@ -1,32 +1,40 @@
-import { useContext } from "react";
-import { Settings, Send } from "lucide-react";
-import { user } from "../data/user";
-import { activities } from "../data/activity";
-import { PageWrapper } from "../components/layout/PageWrapper";
-import { XPBar } from "../components/ui/XPBar";
-import { StatCard } from "../components/ui/StatCard";
-import { WeeklyXPChart } from "../components/charts/WeeklyXPChart";
-import { AppContext } from "../context/AppContext";
-import { useNavigate } from "react-router-dom";
+import { useContext } from 'react'
+import { Settings } from 'lucide-react'
+import { user } from '../data/user'
+import { activities } from '../data/activity'
+import { PageWrapper } from '../components/layout/PageWrapper'
+import { XPBar } from '../components/ui/XPBar'
+import { StatCard } from '../components/ui/StatCard'
+import { WeeklyXPChart } from '../components/charts/WeeklyXPChart'
+import { AppContext } from '../context/AppContext'
+import { useNavigate } from 'react-router-dom'
+import { useWallet } from '../hooks/useWallet'
+import { useCeloBalance } from '../hooks/useCeloBalance'
 
 export const Dashboard = () => {
-  const { showToast } = useContext(AppContext);
-  const navigate = useNavigate();
+  const context = useContext(AppContext)
+  if (!context) throw new Error('AppContext not found')
+  const { showToast, userSeasonalXP, userLifetimeXP } = context
+  const navigate = useNavigate()
+  const { displayAddress } = useWallet()
+  const { formatted: celoBalance } = useCeloBalance()
 
   const handleBoostBannerClick = () => {
-    navigate("/discover");
-  };
+    navigate('/discover')
+  }
 
   return (
     <PageWrapper>
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div>
-          <div className="text-xs text-gray-400">{user.displayAddress}</div>
+          <div className="text-xs text-gray-400">
+            {displayAddress || user.displayAddress}
+          </div>
           <div className="text-xs text-gray-500 mt-1">Season 1 · 18 days left</div>
         </div>
         <button
-          onClick={() => showToast("Settings coming in v2")}
+          onClick={() => showToast('Settings coming in v2')}
           className="p-2 hover:bg-bg-secondary rounded-lg"
         >
           <Settings size={20} />
@@ -42,19 +50,27 @@ export const Dashboard = () => {
         <div className="space-y-2 mb-6">
           <p className="text-sm text-gray-300">
             <span className="font-semibold text-accent-green">
-              {user.seasonalXP.toLocaleString()}
-            </span>{" "}
+              {userSeasonalXP.toLocaleString()}
+            </span>{' '}
             XP this season
           </p>
           <p className="text-sm text-gray-300">
             <span className="font-semibold">
-              {user.lifetimeXP.toLocaleString()}
-            </span>{" "}
+              {userLifetimeXP.toLocaleString()}
+            </span>{' '}
             XP total
           </p>
+          {celoBalance !== '0.0000' && (
+            <p className="text-sm text-gray-300">
+              <span className="font-semibold text-accent-gold">
+                {celoBalance}
+              </span>{' '}
+              CELO available
+            </p>
+          )}
         </div>
         <XPBar
-          current={user.seasonalXP}
+          current={userSeasonalXP}
           nextLevel={user.level + 1}
           currentLevelXP={user.currentLevelXP}
           nextLevelXP={user.nextLevelXP}
@@ -92,20 +108,27 @@ export const Dashboard = () => {
         <div className="space-y-2">
           {activities.map((activity) => {
             const getIcon = () => {
-              const iconProps = "w-4 h-4 text-accent-green";
-              if (activity.type === "transfer") return <Send className={iconProps} />;
-              if (activity.type === "app") return <span className="text-lg">📱</span>;
-              if (activity.type === "vote") return <span className="text-lg">🗳️</span>;
-              if (activity.type === "stake") return <span className="text-lg">🔐</span>;
-              return null;
-            };
+              const iconProps = 'w-4 h-4 text-accent-green'
+              if (activity.type === 'transfer')
+                return <span className="text-lg">💸</span>
+              if (activity.type === 'app') return <span className="text-lg">📱</span>
+              if (activity.type === 'vote') return <span className="text-lg">🗳️</span>
+              if (activity.type === 'stake')
+                return <span className="text-lg">🔐</span>
+              return null
+            }
 
             return (
-              <div key={activity.id} className="bg-bg-secondary rounded-lg p-3 flex items-center justify-between">
+              <div
+                key={activity.id}
+                className="bg-bg-secondary rounded-lg p-3 flex items-center justify-between"
+              >
                 <div className="flex items-center gap-3 flex-1">
                   <div className="flex-shrink-0">{getIcon()}</div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium truncate">{activity.label}</p>
+                    <p className="text-sm font-medium truncate">
+                      {activity.label}
+                    </p>
                     <p className="text-xs text-gray-500">{activity.timestamp}</p>
                   </div>
                 </div>
@@ -113,10 +136,10 @@ export const Dashboard = () => {
                   +{activity.xp} XP
                 </div>
               </div>
-            );
+            )
           })}
         </div>
       </div>
     </PageWrapper>
-  );
-};
+  )
+}

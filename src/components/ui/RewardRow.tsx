@@ -1,4 +1,16 @@
-export const RewardRow = ({ title, amount, claimed, onClaim }) => {
+interface RewardRowProps {
+  title: string
+  amount: string
+  claimed: boolean
+  onClaim: () => void
+}
+
+export const RewardRow = ({
+  title,
+  amount,
+  claimed,
+  onClaim,
+}: RewardRowProps) => {
   return (
     <div className="bg-bg-secondary rounded-lg p-4 flex items-center justify-between mb-3">
       <div>
@@ -10,12 +22,12 @@ export const RewardRow = ({ title, amount, claimed, onClaim }) => {
         disabled={claimed}
         className={`px-4 py-2 rounded-lg font-semibold text-sm transition-all ${
           claimed
-            ? "bg-bg-tertiary text-gray-500 cursor-not-allowed"
-            : "bg-accent-green text-bg-primary hover:opacity-90"
+            ? 'bg-bg-tertiary text-gray-500 cursor-not-allowed'
+            : 'bg-accent-green text-bg-primary hover:opacity-90'
         }`}
       >
-        {claimed ? "Claimed" : "Claim"}
+        {claimed ? 'Claimed' : 'Claim'}
       </button>
     </div>
-  );
-};
+  )
+}

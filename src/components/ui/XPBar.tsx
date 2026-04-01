@@ -1,25 +1,38 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react'
 
-export const XPBar = ({ current, nextLevel, currentLevelXP, nextLevelXP }) => {
-  const [displayProgress, setDisplayProgress] = useState(0);
+interface XPBarProps {
+  current: number
+  nextLevel: number
+  currentLevelXP: number
+  nextLevelXP: number
+}
+
+export const XPBar = ({
+  current,
+  nextLevel,
+  currentLevelXP,
+  nextLevelXP,
+}: XPBarProps) => {
+  const [displayProgress, setDisplayProgress] = useState(0)
 
   useEffect(() => {
-    // Animate the progress bar on mount
     const timeout = setTimeout(() => {
       const progress =
-        ((current - currentLevelXP) / (nextLevelXP - currentLevelXP)) * 100;
-      setDisplayProgress(Math.min(100, Math.max(0, progress)));
-    }, 100);
+        ((current - currentLevelXP) / (nextLevelXP - currentLevelXP)) * 100
+      setDisplayProgress(Math.min(100, Math.max(0, progress)))
+    }, 100)
 
-    return () => clearTimeout(timeout);
-  }, [current, currentLevelXP, nextLevelXP]);
+    return () => clearTimeout(timeout)
+  }, [current, currentLevelXP, nextLevelXP])
 
-  const xpToNextLevel = nextLevelXP - current;
+  const xpToNextLevel = nextLevelXP - current
 
   return (
     <div className="w-full">
       <div className="flex justify-between items-center mb-2">
-        <h3 className="text-sm font-semibold text-gray-300">Progress to Level {nextLevel}</h3>
+        <h3 className="text-sm font-semibold text-gray-300">
+          Progress to Level {nextLevel}
+        </h3>
         <span className="text-sm font-bold text-accent-green">
           +{xpToNextLevel.toLocaleString()} XP
         </span>
@@ -35,5 +48,5 @@ export const XPBar = ({ current, nextLevel, currentLevelXP, nextLevelXP }) => {
         <span>{nextLevelXP.toLocaleString()} XP</span>
       </div>
     </div>
-  );
-};
+  )
+}

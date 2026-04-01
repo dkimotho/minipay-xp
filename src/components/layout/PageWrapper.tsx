@@ -1,6 +1,12 @@
-import { BottomNav } from "./BottomNav";
+import { ReactNode } from 'react'
+import { BottomNav } from './BottomNav'
 
-export const PageWrapper = ({ children, className = "" }) => {
+interface PageWrapperProps {
+  children: ReactNode
+  className?: string
+}
+
+export const PageWrapper = ({ children, className = '' }: PageWrapperProps) => {
   return (
     <div className="flex flex-col flex-1 overflow-hidden bg-bg-primary">
       <div className="flex-1 overflow-y-auto pb-20">
@@ -10,5 +16,5 @@ export const PageWrapper = ({ children, className = "" }) => {
       </div>
       <BottomNav />
     </div>
-  );
-};
+  )
+}

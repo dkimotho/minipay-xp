@@ -1,4 +1,10 @@
-export const CampaignCard = ({ app }) => {
+import { apps } from '../../data/apps'
+
+interface CampaignCardProps {
+  app: (typeof apps)[0]
+}
+
+export const CampaignCard = ({ app }: CampaignCardProps) => {
   return (
     <div className="bg-gradient-to-br from-bg-secondary to-bg-tertiary rounded-lg p-4 min-w-[160px] flex-shrink-0 border border-accent-gold border-opacity-20">
       <div className="text-3xl mb-2">{app.emoji}</div>
@@ -15,5 +21,5 @@ export const CampaignCard = ({ app }) => {
         Earn Now →
       </button>
     </div>
-  );
-};
+  )
+}
