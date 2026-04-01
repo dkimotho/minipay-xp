@@ -1,0 +1,58 @@
+export const activities = [
+  {
+    id: 1,
+    type: "transfer",
+    label: "Sent cUSD to 0x8b2f...4d9a",
+    xp: 25,
+    timestamp: "2h ago",
+  },
+  {
+    id: 2,
+    type: "app",
+    label: "Used Kolekti",
+    xp: 50,
+    timestamp: "4h ago",
+  },
+  {
+    id: 3,
+    type: "vote",
+    label: "Voted on Proposal #14",
+    xp: 75,
+    timestamp: "6h ago",
+  },
+  {
+    id: 4,
+    type: "stake",
+    label: "Staked 10 CELO",
+    xp: 100,
+    timestamp: "1d ago",
+  },
+  {
+    id: 5,
+    type: "app",
+    label: "Used Myriad Markets",
+    xp: 40,
+    timestamp: "1d ago",
+  },
+  {
+    id: 6,
+    type: "transfer",
+    label: "Received 5 cUSD from 0x3c7e...9f1b",
+    xp: 20,
+    timestamp: "2d ago",
+  },
+  {
+    id: 7,
+    type: "app",
+    label: "Used Bitrefill",
+    xp: 60,
+    timestamp: "2d ago",
+  },
+  {
+    id: 8,
+    type: "vote",
+    label: "Voted on Proposal #13",
+    xp: 75,
+    timestamp: "3d ago",
+  },
+];
